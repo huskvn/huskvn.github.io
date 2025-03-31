@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             stopLoading();
             // Redirect to slogan page after scan complete
             redirectToSlogan();
-        }, 10000);
+        }, 5000);
     }
 
     function stopLoading() {
