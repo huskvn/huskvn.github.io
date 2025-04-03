@@ -18,16 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         isLoading = true;
         fingerprintCircle.classList.add('loading');
         
-        // Start countdown
-        const countdown = document.querySelector('.countdown');
-        let timeLeft = 120;
-        countdown.textContent = timeLeft;
-        
-        // Start countdown
-        progressInterval = setInterval(() => {
-            timeLeft--;
-            countdown.textContent = timeLeft;
-        }, 1000);
         
         // Start the timer
         pressTimer = setTimeout(() => {
@@ -42,8 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
         isLoading = false;
         fingerprintCircle.classList.remove('loading');
         clearTimeout(pressTimer);
-        clearInterval(progressInterval);
-        document.querySelector('.countdown').textContent = '120';
     }
 
     function redirectToSlogan() {
