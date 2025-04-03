@@ -3,18 +3,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let pressTimer;
     let isLoading = false;
 
-    // Handle mouse events (desktop)
-    fingerprintCircle.addEventListener('mousedown', startLoading);
-    fingerprintCircle.addEventListener('mouseup', stopLoading);
-    fingerprintCircle.addEventListener('mouseleave', stopLoading);
+    // Handle click events (desktop)
+    fingerprintCircle.addEventListener('click', startLoading);
 
     // Handle touch events (mobile)
-    fingerprintCircle.addEventListener('touchstart', (e) => {
+    fingerprintCircle.addEventListener('touchend', (e) => {
         e.preventDefault(); // Prevent default touch behavior
         startLoading();
     });
-    fingerprintCircle.addEventListener('touchend', stopLoading);
-    fingerprintCircle.addEventListener('touchcancel', stopLoading);
 
     function startLoading() {
         if (isLoading) return;
@@ -22,12 +18,22 @@ document.addEventListener('DOMContentLoaded', () => {
         isLoading = true;
         fingerprintCircle.classList.add('loading');
         
+        // Start countdown
+        const countdown = document.querySelector('.countdown');
+        let timeLeft = 120;
+        countdown.textContent = timeLeft;
+        
+        // Start countdown
+        progressInterval = setInterval(() => {
+            timeLeft--;
+            countdown.textContent = timeLeft;
+        }, 1000);
+        
         // Start the timer
         pressTimer = setTimeout(() => {
             stopLoading();
-            // Redirect to slogan page after scan complete
             redirectToSlogan();
-        }, 5000);
+        }, 120000);
     }
 
     function stopLoading() {
@@ -36,6 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
         isLoading = false;
         fingerprintCircle.classList.remove('loading');
         clearTimeout(pressTimer);
+        clearInterval(progressInterval);
+        document.querySelector('.countdown').textContent = '120';
     }
 
     function redirectToSlogan() {
