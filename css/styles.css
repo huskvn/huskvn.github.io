@@ -85,8 +85,16 @@ body {
     transition: opacity 0.3s ease;
 }
 
+
+@keyframes clickZoom {
+    0% { transform: scale(0.9); }
+    50% { transform: scale(0.8); }
+    100% { transform: scale(0.9); }
+}
+
 .loading .fingerprint-icon {
-    opacity: 0.3;
+    opacity: 0.9;
+    animation: clickZoom 1s ease-in-out infinite;
 }
 
 .green-overlay {

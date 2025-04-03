@@ -1,25 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
     const fingerprintCircle = document.querySelector('.fingerprint-circle');
     let pressTimer;
+    let progressInterval;
     let isLoading = false;
 
     // Handle click events (desktop)
-    fingerprintCircle.addEventListener('click', startLoading);
+    fingerprintCircle.addEventListener('click', () => {
+        if (!isLoading) {
+            startLoading();
+        }
+    });
 
     // Handle touch events (mobile)
     fingerprintCircle.addEventListener('touchend', (e) => {
-        e.preventDefault(); // Prevent default touch behavior
-        startLoading();
+        e.preventDefault();
+        if (!isLoading) {
+            startLoading();
+        }
     });
 
     function startLoading() {
-        if (isLoading) return;
-        
         isLoading = true;
         fingerprintCircle.classList.add('loading');
         
+        // Add zoom effect
+        const icon = document.querySelector('.fingerprint-icon');
+        icon.classList.add('clicked');
+        icon.addEventListener('animationend', () => {
+            icon.classList.remove('clicked');
+        }, { once: true });
         
-        // Start the timer
         pressTimer = setTimeout(() => {
             stopLoading();
             redirectToSlogan();
@@ -32,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         isLoading = false;
         fingerprintCircle.classList.remove('loading');
         clearTimeout(pressTimer);
+        clearInterval(progressInterval);
     }
 
     function redirectToSlogan() {
